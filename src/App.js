@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import api from './services/api';
 
 import "./styles.css";
 
 function App() {
-  const [repositories, setRepositories] = useState([{
-    id: '1',
-    title: 'Repositório 1',
-    url: 'https://www.github.com/sammuelgr/rocketshoes'
-  }]); 
+  const [repositories, setRepositories] = useState([]);
+
+  useEffect(() => {
+    api.get('/repositories').then(response => {
+      setRepositories(response.data);
+    })
+    .catch(err => console.log(err));
+  }, []);
 
   async function handleAddRepository() {
     const newRepository = {
-      id: Date.now(),
       title: 'Novo repo',
       url: 'https://www.github.com/sammuelgr/aircnc'
     };
