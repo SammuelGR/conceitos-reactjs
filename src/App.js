@@ -3,25 +3,33 @@ import React, { useState } from "react";
 import "./styles.css";
 
 function App() {
-  const [repositories, setRepositories] = useState(['Repositório 1', 'Repositório 2']); 
+  const [repositories, setRepositories] = useState([{
+    id: '1',
+    title: 'Repositório 1',
+    url: 'https://www.github.com/sammuelgr/rocketshoes'
+  }]); 
 
   async function handleAddRepository() {
-    const newRepository = 'Novo repositório';
+    const newRepository = {
+      id: Date.now(),
+      title: 'Novo repo',
+      url: 'https://www.github.com/sammuelgr/aircnc'
+    };
 
     setRepositories([...repositories, newRepository]);
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    setRepositories(repositories.filter(repo => repo.id !== id));
   }
 
   return (
     <div>
       <ul data-testid="repository-list">
         { repositories.map(repo => (
-          <li key={repo}>
-          {repo}
-          <button onClick={() => handleRemoveRepository(1)}>
+          <li key={repo.id}>
+          {repo.title}
+          <button onClick={() => handleRemoveRepository(repo.id)}>
             Remover
           </button>
         </li>
