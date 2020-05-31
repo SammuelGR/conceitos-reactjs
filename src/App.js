@@ -14,12 +14,15 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    const newRepository = {
+    const response = await api.post('/repositories', {
       title: 'Novo repo',
-      url: 'https://www.github.com/sammuelgr/aircnc'
-    };
+      url: 'https://www.github.com/sammuelgr/aircnc',
+      techs: ['React Native', 'Node.js']
+    });
 
-    setRepositories([...repositories, newRepository]);
+    const repository = response.data;
+
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
